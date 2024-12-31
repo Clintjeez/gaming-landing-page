@@ -88,7 +88,7 @@ const Navbar = () => {
               <audio
                 ref={audioElementRef}
                 className='hidden'
-                src='https://drive.google.com/uc?export=view&id=1sYbnxxrUBlAIav6uKJHC0EO-bP3KuWGG'
+                src='https://www.dropbox.com/scl/fi/9vzt1418177boxyoxxs5e/loop.mp3?rlkey=fdt2z6zu9z15rc2v5b01fwbu0&st=v3edia2f&dl=1'
                 loop
               />
               {[1, 2, 3, 4].map((bar) => (
