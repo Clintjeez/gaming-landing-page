@@ -7,20 +7,48 @@ import { ScrollTrigger } from 'gsap/all';
 
 gsap.registerPlugin(ScrollTrigger);
 
+const videos = [
+  {
+    id: 1,
+    url: 'https://www.dropbox.com/scl/fi/n70e2h5llo8d3l42s81le/hero-1.mp4?rlkey=rlxs0k7tk4ynselsaen7nm0sw&st=hv5s76az&dl=1',
+    alt: 'Gaming video 1',
+  },
+  {
+    id: 2,
+    url: 'https://www.dropbox.com/scl/fi/z2fxhx3fx4yrgl9kllw04/hero-2.mp4?rlkey=dhrf16ugcykrhk8emju1wd2nq&st=kn5zne9v&dl=1',
+    alt: 'Gaming video 2',
+  },
+  {
+    id: 3,
+    url: 'https://www.dropbox.com/scl/fi/5nqg652fd0z3u75lc015h/hero-3.mp4?rlkey=yrzteby2b9yzicmi1mtjx29ap&st=9ggoo7wy&dl=1',
+    alt: 'Gaming video 3',
+  },
+  {
+    id: 4,
+    url: 'https://www.dropbox.com/scl/fi/d5gt889y54uyp6uvhgrgm/hero-4.mp4?rlkey=b2icbga1wybvyuzcacjohpgsi&st=bldrzeag&dl=1',
+    alt: 'Gaming video 4',
+  },
+];
+
 const Hero = () => {
   const [currentIndex, setCurrentIndex] = useState(1);
   const [hasClicked, setHasClicked] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadedVideos, setLoadedVideos] = useState(0);
 
-  const totalVideos = 4;
+  const totalVideos = videos.length;
   const nextVideoRef = useRef(null);
+
+  const currentVideo = videos.find((v) => v.id === currentIndex) || videos[0];
+  const upcomingVideoIndex = (currentIndex % totalVideos) + 1;
+  const upcomingVideo =
+    videos.find((v) => v.id === upcomingVideoIndex) || videos[0];
 
   const handleVideoLoad = () => {
     setLoadedVideos((prev) => prev + 1);
   };
 
-  const upcomingVideoIndex = (currentIndex % totalVideos) + 1;
+  //   const upcomingVideoIndex = (currentIndex % totalVideos) + 1;
 
   const handleMiniVdClick = () => {
     setHasClicked(true);
@@ -78,7 +106,10 @@ const Hero = () => {
     });
   });
 
-  const getVideoSrc = (index) => `videos/hero-${index}.mp4`;
+  //   const getVideoSrc = (index) =>
+  //     `https://www.dropbox.com/scl/fi/n70e2h5llo8d3l42s81le/hero-${index}.mp4?rlkey=rlxs0k7tk4ynselsaen7nm0sw&st=pveqkt5k&dl=1`;
+  //   const getVideoSrc1 = (index) =>
+  //     `https://www.dropbox.com/scl/fi/z2fxhx3fx4yrgl9kllw04/hero-${index}.mp4?rlkey=dhrf16ugcykrhk8emju1wd2nq&st=h4x679c8&dl=0`;
 
   return (
     <div className='relative h-dvh w-screen overflow-x-hidden'>
@@ -106,7 +137,7 @@ const Hero = () => {
                 muted
                 id='current-video'
                 ref={nextVideoRef}
-                src={getVideoSrc(upcomingVideoIndex)}
+                src={upcomingVideo.url}
                 className='size-64 origin-center scale-150 object-cover object-center'
                 onLoadedData={handleVideoLoad}
               />
@@ -118,7 +149,7 @@ const Hero = () => {
             muted
             id='next-video'
             ref={nextVideoRef}
-            src={getVideoSrc(currentIndex)}
+            src={currentVideo.url}
             className='absolute-center invisible absolute z-20 size-64 object-cover object-center'
             onLoadedData={handleVideoLoad}
           />
@@ -127,9 +158,7 @@ const Hero = () => {
             autoPlay
             loop
             muted
-            src={getVideoSrc(
-              currentIndex === totalVideos - 1 ? 1 : currentIndex
-            )}
+            src={currentVideo.url}
             className='absolute left-0 top-0 size-full object-cover object-center'
             onLoadedData={handleVideoLoad}
           />
